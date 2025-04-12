@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hostel Dayz - Admission Form</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4;
+      color: #222;
+      line-height: 1.6;
+      animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideIn {
+      0% {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .apply-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: #222;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      z-index: 1000;
+    }
+
+    .apply-header h1 {
+      margin: 0;
+      animation: slideIn 1s ease-out;
+    }
+
+    .page-content {
+      flex: 1;
+      padding-top: 60px;
+    }
+
+    .main-container {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .left-content {
+      flex: 1;
+      min-height: 900px;
+      background-image: url(images/Navy\ and\ Purple\ Geometric\ Open\ Admission\ Poster.jpg);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .form-container {
+      width: 800px;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      animation: slideIn 1s ease-out;
+    }
+
+    .form-container input,
+    .form-container select,
+    .form-container textarea,
+    .form-container button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    .form-container button {
+      background-color: #222;
+      color: white;
+      cursor: pointer;
+      border: none;
+    }
+
+    .form-container button:hover {
+      background-color: #ffd700;
+      color: #000;
+    }
+
+    .country-code {
+      width: 120px;
+    }
+
+    .captcha-container {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .captcha-question {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .simple-footer {
+      background-color: #222;
+      color: #fff;
+      text-align: center;
+      padding: 20px 10px;
+      font-size: 14px;
+      animation: fadeIn 1s ease-out;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-contact {
+      color: #ffd700;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-contact:hover {
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="apply-header">
+    <h1>Hostel Dayz Admission Form</h1>
+  </div>
+
+  <div class="page-content">
+    <div class="main-container">
+      <div class="left-content"></div>
+      <div class="form-container">
+        <h2>Apply Now</h2>
+        <form id="admissionForm">
+          <input type="text" id="StudentName" placeholder="Student Name*" required />
+          <input type="email" id="StudentEmail" placeholder="Student Email*" required />
+          <div style="display: flex; gap: 10px">
+            <select class="country-code" id="countryCode" required>
+              <option value="+1">+1 (USA)</option>
+              <option value="+44">+44 (UK)</option>
+              <option value="+91">+91 (India)</option>
+            </select>
+            <input type="number" id="StudentMobileNumber" placeholder="Student Mobile Number*" required />
+          </div>
+          <select id="Gender" required>
+            <option value="" disabled selected>Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+          <input type="text" id="course" placeholder="Course/Program" required />
+          <select id="roomType" required>
+            <option value="" disabled selected>Select Room Type</option>
+            <option value="single non ac">Single Room(AC)</option>
+            <option value="triple ac ">Single Room(NON-AC)</option>
+            <option value="triple non ac">Triple Room(AC)</option>
+            <option value="triple">Triple Room(NON-AC)</option>
+          </select>
+          <textarea id="message" rows="4" placeholder="Additional Message" required></textarea>
+
+          <!-- Custom CAPTCHA -->
+          <div class="captcha-container">
+            <div class="captcha-question" id="captchaQuestion">Loading CAPTCHA...</div>
+            <input type="text" id="captchaAnswer" placeholder="Answer the question above" required />
+          </div>
+
+          <button type="submit">Submit Application</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="simple-footer">
+    <div class="footer-container">
+      <p>&copy; 2025 Hostel Dayz. All rights reserved.</p>
+      <p>
+        📞 <a href="tel:+911123456789" class="footer-contact">+91 1123456789</a> |
+        ✉️ <a href="mailto:support@hosteldayz.com" class="footer-contact">support@hosteldayz.com</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    let num1, num2;
+
+    function generateCaptcha() {
+      num1 = Math.floor(Math.random() * 10) + 1;
+      num2 = Math.floor(Math.random() * 10) + 1;
+      document.getElementById("captchaQuestion").textContent = `What is ${num1} + ${num2}?`;
+    }
+
+    document.getElementById("admissionForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const userAnswer = parseInt(document.getElementById("captchaAnswer").value);
+      if (userAnswer !== num1 + num2) {
+        alert("Incorrect CAPTCHA answer. Please try again.");
+        generateCaptcha(); // regenerate new question
+        return;
+      }
+
+      alert("Application submitted successfully!");
+      this.reset();
+      generateCaptcha();
+    });
+
+    window.onload = generateCaptcha;
+  </script>
+</body>
+
+</html>

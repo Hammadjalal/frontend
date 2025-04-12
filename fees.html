@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fees Structure - XYZ Hostels</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="shortcut icon" href="images/fevicon/favicon.ico" type="image/x-icon">
+  <style>
+    /* Existing styles remain unchanged */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 1.2s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in.delay-1 { animation-delay: 0.3s; }
+    .fade-in.delay-2 { animation-delay: 0.6s; }
+    .fade-in.delay-3 { animation-delay: 0.9s; }
+
+    .fees-table {
+      overflow-x: auto;
+      margin-top: 30px;
+    }
+
+    .fees-table table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .fees-table th,
+    .fees-table td {
+      padding: 15px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .fees-table th {
+      background-color: #222;
+      color: #ffd700;
+    }
+
+    .fees-table tr:hover {
+      background-color: #f5f5f5;
+    }
+
+    main {
+      padding: 60px 10%;
+      background-color: #f9f9f9;
+      font-family: "Josefin Sans", sans-serif;
+    }
+
+    main h2 {
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    @media (max-width: 768px) {
+      main { padding: 40px 20px; }
+      main h2 { font-size: 26px; }
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.85);
+      padding: 20px 50px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar .logo {
+      font-size: 24px;
+      color: white;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+      font-size: 16px;
+      padding: 6px 10px;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: #ffd700; }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0.9);
+      top: 35px;
+      left: 0;
+      min-width: 160px;
+      border-radius: 5px;
+      z-index: 1001;
+    }
+
+    .dropdown:hover .dropdown-content { display: block; }
+
+    body { padding-top: 80px; }
+
+    .footer-link {
+      color: #ccc;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-link:hover { color: #ffd700; }
+
+    /* New Payment Styles */
+    .pay-btn {
+      background-color: #ffd700;
+      color: #222;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .pay-btn:hover {
+      background-color: #e6c200;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 1001;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      cursor: pointer;
+      color: #666;
+    }
+
+    .payment-options {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .payment-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: border-color 0.3s;
+    }
+
+    .payment-option:hover {
+      border-color: #ffd700;
+    }
+
+    .payment-option input[type="radio"] {
+      margin: 0;
+    }
+
+    .payment-form {
+      margin-top: 20px;
+    }
+
+    .payment-form input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    .submit-payment {
+      background-color: #222;
+      color: #ffd700;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    .submit-payment:hover {
+      background-color: #333;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar (unchanged) -->
+  <nav class="navbar">
+    <div class="logo">Hostel Dayz</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li class="dropdown">
+        <a href="#">Hostels</a>
+        <ul class="dropdown-content">
+          <li><a href="#">Boys Hostel</a></li>
+          <li><a href="#">Girls Hostel</a></li>
+          <li><a href="#">Faculty Hostel</a></li>
+        </ul>
+      </li>
+      <li><a href="fees.html">Fees Structure</a></li>
+      <li><a href="index.html">About Us</a></li>
+    </ul>
+  </nav>
+
+  <!-- Page Content -->
+  <main>
+    <h2 class="fade-in">Fees Structure</h2>
+    <div class="fees-table fade-in delay-1">
+      <table>
+        <thead>
+          <tr>
+            <th>Hostel Type</th>
+            <th>Room Type</th>
+            <th>AC/Non-AC</th>
+            <th>Monthly Fee</th>
+            <th>Yearly Fee</th>
+            <th>Facilities Included</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Boys Hostel</td>
+            <td>Single Bed</td>
+            <td>AC</td>
+            <td>₹6,000</td>
+            <td>₹66,000</td>
+            <td>Wi-Fi, Electricity, Water</td>
+            <td><button class="pay-btn" data-amount="6000" data-type="Boys Hostel - Single Bed AC">Pay Now</button></td>
+          </tr>
+          <tr>
+            <td>Boys Hostel</td>
+            <td>Triple Bed</td>
+            <td>Non-AC</td>
+            <td>₹4,800</td>
+            <td>₹52,000</td>
+            <td>Wi-Fi, Electricity</td>
+            <td><button class="pay-btn" data-amount="4800" data-type="Boys Hostel - Triple Bed Non-AC">Pay Now</button></td>
+          </tr>
+          <tr>
+            <td>Girls Hostel</td>
+            <td>Single Bed</td>
+            <td>AC</td>
+            <td>₹6,200</td>
+            <td>₹68,000</td>
+            <td>Wi-Fi, Security, Cleaning</td>
+            <td><button class="pay-btn" data-amount="6200" data-type="Girls Hostel - Single Bed AC">Pay Now</button></td>
+          </tr>
+          <tr>
+            <td>Girls Hostel</td>
+            <td>Triple Bed</td>
+            <td>Non-AC</td>
+            <td>₹5,000</td>
+            <td>₹55,000</td>
+            <td>Wi-Fi, Cleaning</td>
+            <td><button class="pay-btn" data-amount="5000" data-type="Girls Hostel - Triple Bed Non-AC">Pay Now</button></td>
+          </tr>
+          <tr>
+            <td>Faculty Hostel</td>
+            <td>Single Bed</td>
+            <td>AC</td>
+            <td>₹7,000</td>
+            <td>₹75,000</td>
+            <td>Room Cleaning, Wi-Fi, Geyser</td>
+            <td><button class="pay-btn" data-amount="7000" data-type="Faculty Hostel - Single Bed AC">Pay Now</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Payment Modal -->
+  <div id="paymentModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h3>Make Payment</h3>
+      <p id="paymentDetails"></p>
+      <div class="payment-options">
+        <label class="payment-option">
+          <input type="radio" name="paymentMethod" value="gpay"> GPay
+        </label>
+        <label class="payment-option">
+          <input type="radio" name="paymentMethod" value="paytm"> Paytm
+        </label>
+        <label class="payment-option">
+          <input type="radio" name="paymentMethod" value="phonepe"> PhonePe
+        </label>
+      </div>
+      <div class="payment-form">
+        <input type="text" id="phoneNumber" placeholder="Enter Phone Number" maxlength="10">
+        <button class="submit-payment" onclick="processPayment()">Proceed to Pay</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer (unchanged) -->
+  <footer class="footer fade-in delay-2" style="background-color: #222; color: #fff; padding: 40px 10% 20px;">
+    <div class="footer-container" style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px;">
+      <div class="footer-section about" style="flex: 1 1 250px;">
+        <h3 style="color: #ffd700; margin-bottom: 10px;">Hostel Dayz</h3>
+        <p style="line-height: 1.6;">Providing safe, comfortable, and affordable hostel accommodation for students and faculty members. Your home away from home.</p>
+      </div>
+      <div class="footer-section links" style="flex: 1 1 200px;">
+        <h4 style="color: #ffd700; margin-bottom: 10px;">Quick Links</h4>
+        <ul style="list-style: none; padding: 0;">
+          <li><a href="index.html" class="footer-link">Home</a></li>
+          <li><a href="#" class="footer-link">Boys Hostel</a></li>
+          <li><a href="#" class="footer-link">Girls Hostel</a></li>
+          <li><a href="#" class="footer-link">Faculty Hostel</a></li>
+          <li><a href="fees.html" class="footer-link">Fees Structure</a></li>
+          <li><a href="index.html" class="footer-link">About Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-section contact" style="flex: 1 1 200px;">
+        <h4 style="color: #ffd700; margin-bottom: 10px;">Contact Us</h4>
+        <p>Email: <a href="mailto:support@xyzhostels.com" class="footer-link">support@hosteldayz.com</a></p>
+        <p>Phone: <a href="tel:+1123456789" class="footer-link">+91-1123456789</a></p>
+        <p>Hours: Mon - Fri, 9AM - 6PM</p>
+      </div>
+    </div>
+    <div class="footer-bottom" style="text-align: center; margin-top: 30px; border-top: 1px solid #444; padding-top: 20px;">
+      <p style="margin: 0;">© 2025 Hostel Dayz. All rights reserved.</p>
+      <a href="#" class="back-to-top footer-link" style="display: inline-block; margin-top: 10px;">↑ Back to Top</a>
+    </div>
+  </footer>
+
+  <script>
+    // Back to top functionality
+    document.querySelector('.back-to-top').addEventListener('click', function (e) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Payment modal functionality
+    const modal = document.getElementById('paymentModal');
+    const closeBtn = document.querySelector('.close-btn');
+    const payButtons = document.querySelectorAll('.pay-btn');
+    const paymentDetails = document.getElementById('paymentDetails');
+
+    payButtons.forEach(button => {
+      button.addEventListener('click', function () {
+        const amount = this.getAttribute('data-amount');
+        const type = this.getAttribute('data-type');
+        paymentDetails.textContent = `Paying ₹${amount} for ${type}`;
+        modal.style.display = 'block';
+      });
+    });
+
+    closeBtn.addEventListener('click', function () {
+      modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', function (event) {
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+
+    function processPayment() {
+      const phoneNumber = document.getElementById('phoneNumber').value;
+      const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked');
+      
+      if (!phoneNumber.match(/^\d{10}$/)) {
+        alert('Please enter a valid 10-digit phone number.');
+        return;
+      }
+
+      if (!selectedMethod) {
+        alert('Please select a payment method.');
+        return;
+      }
+
+      const amount = paymentDetails.textContent.match(/₹(\d+)/)[1];
+      const method = selectedMethod.value;
+
+      // Simulate payment processing (replace with actual payment gateway integration)
+      alert(`Processing payment of ₹${amount} via ${method} for ${phoneNumber}`);
+      modal.style.display = 'none';
+      document.getElementById('phoneNumber').value = '';
+    }
+  </script>
+</body>
+
+</html>
